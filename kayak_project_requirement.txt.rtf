@@ -1,0 +1,553 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 TimesNewRomanPSMT;\f2\froman\fcharset0 TimesNewRomanPS-BoldMT;
+\f3\froman\fcharset0 TimesNewRomanPS-ItalicMT;}
+{\colortbl;\red255\green255\blue255;\red65\green65\blue65;\red16\green83\blue204;}
+{\*\expandedcolortbl;;\csgenericrgb\c25490\c25490\c25490;\csgenericrgb\c6275\c32549\c80000;}
+\margl1440\margr1440\vieww35800\viewh22600\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+ \
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  
+\f1 An API design document of services provided by the application. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Distributed Systems for Data Engineering Class Group Project: Kayak Simulation 
+\f0\b0 \
+
+\f2\b Project Due Date (Presentation and Demo): 1st December 2025 and 8th December 2025 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 Turn in the following on or before November 3, 2025. No late submissions will be accepted! 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 You are allowed to use GenAI tools for this group project only 
+\f0\b0 \
+
+\f2\b History & About Kayak 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 KAYAK is a travel metasearch and booking platform. It aggregates options for flights, hotels, and rental cars from multiple providers, enabling travelers to search, compare, and choose the option that best fits their needs. Your simulation will emulate these core functions- search, filter, book, bill, and analyze usage within a distributed, service-oriented architecture. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  Users \
+\uc0\u9679  
+\f1 Listings (Flights , Hotels, Cars) 
+\f0 \
+\uc0\u9679  Billing \
+\uc0\u9679  Admin \
+\
+\uc0\u9679  
+\f1 User ID [SSN Format] 
+\f0 \
+\uc0\u9679  First Name \
+\uc0\u9679  Last Name \
+\uc0\u9679  Address \
+\uc0\u9679  City \
+\uc0\u9679  State \
+\uc0\u9679  Zip Code \
+\uc0\u9679  
+\f1 Phone Number 
+\f0 \
+\uc0\u9679  Email \
+\uc0\u9679  
+\f1 Profile Image 
+\f0 \
+\uc0\u9679  
+\f1 Credit Card / Payment Details 
+\f0 \
+\uc0\u9679  
+\f1 Booking History (Past / Current / Future Trips) 
+\f0 \
+\uc0\u9679  
+\f1 Reviews submitted for flights, hotels, and cars 
+\f0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Project Overview 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 In this project, you will design a 3-tier application that implements the functions of a Kayak-like travel system. You will build on the techniques used in your lab assignments to create the system. 
+\f0 \
+
+\f1 In the Kayak System, you will manage and implement different types of objects: 
+\f0 \
+
+\f1 For each type of object, you will also need to implement an associated database schema that will be responsible for representing how a given object should be stored (relational and/or document, as appropriate). 
+\f0 \
+
+\f1 Your system should be built upon a distributed architecture. You have to use REST-based web services and message queues (Kafka) as middleware technology. You will be given a great deal of \'93
+\f2\b artistic libert
+\f1\b0 y\'94 in how you choose to implement the system. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 System Entities 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 You must support the following entity types (minimum). You may add attributes/relations as needed and define primary/foreign keys across services. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Users 
+\f1\b0 - It represents information about an individual user registered on Kayak. You must manage the following information for this entity: 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  
+\f1 Flight ID (e.g., AA123) 
+\f0 \
+\uc0\u9679  
+\f1 Airline / Operator Name 
+\f0 \
+\uc0\u9679  
+\f1 Departure Airport 
+\f0 \
+\uc0\u9679  
+\f1 Arrival Airport 
+\f0 \
+\uc0\u9679  
+\f1 Departure Date and Time 
+\f0 \
+\uc0\u9679  
+\f1 Arrival Date and Time 
+\f0 \
+\uc0\u9679  Duration \
+\uc0\u9679  
+\f1 Flight Class (Economy / Business / First) 
+\f0 \
+\uc0\u9679  
+\f1 Ticket Price 
+\f0 \
+\uc0\u9679  
+\f1 Total Available Seats 
+\f0 \
+\uc0\u9679  
+\f1 Flight Rating 
+\f0 \
+\uc0\u9679  
+\f1 Passenger Reviews 
+\f0 \
+\
+\uc0\u9679  Hotel ID \
+\uc0\u9679  Hotel Name \
+\uc0\u9679  Address \
+\uc0\u9679  City \
+\uc0\u9679  State \
+\uc0\u9679  Zip Code \
+\uc0\u9679  Star Rating \
+\uc0\u9679  
+\f1 Number of Rooms 
+\f0 \
+\uc0\u9679  
+\f1 Room Type (Single, Double, Suite, etc.) 
+\f0 \
+\uc0\u9679  
+\f1 Price per Night 
+\f0 \
+\uc0\u9679  
+\f1 Amenities (e.g., Wi-Fi, Breakfast, Parking) 
+\f0 \
+\uc0\u9679  
+\f1 Hotel Rating 
+\f0 \
+\uc0\u9679  
+\f1 Guest Reviews 
+\f0 \
+\uc0\u9679  
+\f1 Images of Rooms and Property 
+\f0 \
+\
+\uc0\u9679  Car ID \
+\uc0\u9679  
+\f1 Car Type (SUV, Sedan, Compact, etc.) 
+\f0 \
+\uc0\u9679  
+\f1 Company / Provider Name 
+\f0 \
+\uc0\u9679  
+\f1 Model and Year 
+\f0 \
+\uc0\u9679  Transmission Type \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Flights 
+\f1\b0 - It represents information about available flights that users can search and book through Kayak. You must manage the following information for this entity: 
+\f0 \
+
+\f2\b Hotels 
+\f1\b0 - It represents information about hotels listed on Kayak. You must manage the following information for this entity: 
+\f0 \
+
+\f2\b Cars 
+\f1\b0 - It represents information about cars available for rent through Kayak. You must manage the following information for this entity: 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  Number of Seats \
+\uc0\u9679  
+\f1 Daily Rental Price 
+\f0 \
+\uc0\u9679  
+\f1 Car Rating 
+\f0 \
+\uc0\u9679  
+\f1 Customer Reviews 
+\f0 \
+\uc0\u9679  
+\f1 Car Availability Status 
+\f0 \
+\
+\uc0\u9679  Billing ID \
+\uc0\u9679  User ID \
+\uc0\u9679  
+\f1 Booking Type (Flight / Hotel / Car) 
+\f0 \
+\uc0\u9679  Booking ID \
+\uc0\u9679  Date of Transaction \
+\uc0\u9679  
+\f1 Total Amount Paid 
+\f0 \
+\uc0\u9679  
+\f1 Payment Method (Credit Card, PayPal, etc.) 
+\f0 \
+\uc0\u9679  
+\f1 Transaction Status 
+\f0 \
+\uc0\u9679  
+\f1 Invoice / Receipt Details 
+\f0 \
+\
+\uc0\u9679  Admin ID \
+\uc0\u9679  First Name \
+\uc0\u9679  Last Name \
+\uc0\u9679  Address \
+\uc0\u9679  City \
+\uc0\u9679  State \
+\uc0\u9679  Zip Code \
+\uc0\u9679  
+\f1 Phone Number 
+\f0 \
+\uc0\u9679  Email \
+\uc0\u9679  
+\f1 Role / Access Level 
+\f0 \
+\uc0\u9679  
+\f1 Reports and Analytics Managed 
+\f0 \
+\
+\uc0\u9679  
+\f1 The client tier, where the user will interact with your system 
+\f0 \
+\uc0\u9679  
+\f1 The middle tier/middleware/messaging system, where the majority of the processing takes place 
+\f0 \
+\uc0\u9679  
+\f1 The third tier, comprising databases to store the state of your entity objects 
+\f0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Billing 
+\f1\b0 - It represents information related to payment and transaction details for bookings made by users. You must manage the following information for this entity: 
+\f0 \
+
+\f2\b Administrator 
+\f1\b0 - It represents information about the administrators responsible for managing the Kayak system. You must manage the following information for this entity: 
+\f0 \
+
+\f2\b Your project will consist of three tiers: 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9675  
+\f1 Filter hotels by stars, price 
+\f0 \
+\uc0\u9675  
+\f1 Filter flights by departure/arrival times, price 
+\f0 \
+\uc0\u9675  
+\f1 Filter cars by car type, price 
+\f0 \
+\pard\pardeftab720\sa10444\partightenfactor0
+\cf0 \uc0\u9679  Filter listings \
+\uc0\u9679  
+\f1 Create a new User (use Kayak fields as guidance) 
+\f0 \
+\uc0\u9679  Delete an existing User \
+\uc0\u9679  
+\f1 Change a user\'92s information (name, address, profile image, etc.) - 
+\f3\i This function must support the ability to change ALL attributes 
+\f0\i0 \
+\uc0\u9679  
+\f1 Display information about a User 
+\f0 \
+\uc0\u9679  
+\f1 Search listings for different categories (Flights, Hotels, Cars) 
+\f0 \
+\uc0\u9679  Book a hotel/flight/car \
+\uc0\u9679  
+\f1 Make Payment 
+\f0 \
+\uc0\u9679  
+\f1 View Past/Current/Future bookings 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\uc0\u9679  
+\f1 Allow only authorized (admin) users to access Admin Module 
+\f0 \
+\uc0\u9679  
+\f1 Add listings (hotel/flight/car) to the system 
+\f0 \
+\uc0\u9679  
+\f1 Search for a listing and edit it 
+\f0 \
+\uc0\u9679  
+\f1 View/Modify user accounts 
+\f0 \
+\uc0\u9679  
+\f1 Search for a Bill based on attributes (by date, by month) 
+\f0 \
+\uc0\u9679  
+\f1 Display information about a Bill 
+\f0 \
+\
+\uc0\u9679  
+\f2\b Top 10 properties 
+\f1\b0 with revenue per year (bar/pie/any chart) 
+\f0 \
+\uc0\u9679  
+\f2\b City-wise revenue 
+\f1\b0 per year (bar/pie/any chart) 
+\f0 \
+\uc0\u9679  
+\f2\b 10 hosts/providers 
+\f1\b0 with the maximum properties sold last month and associated revenue 
+\f0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Tier 1 - Client Requirements 
+\f1\b0 \
+The client will be an application that allows a user to do the following: 
+\f0 \
+
+\f2\b User Module/Service 
+\f1\b0 \
+
+\f2\b Admin Module/Service 
+\f0\b0 \
+
+\f2\b Sample Admin Analysis Report 
+\f1\b0 \cf2 The Admin dashboard will present graphs/charts such as: 
+\f0 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  
+\f1 Graph for clicks per page (bar/pie/any chart) 
+\f0 \
+\uc0\u9679  
+\f1 Graph for property/listing clicks (bar/pie/any chart) 
+\f0 \
+\uc0\u9679  
+\f1 Capture the area/section which is least seen 
+\f0 \
+\uc0\u9679  
+\f1 Graph for reviews on properties (database) 
+\f0 \
+\uc0\u9679  
+\f1 Trace diagram for tracking one user or a cohort (e.g., users from San Jose, CA) 
+\f0 \
+\uc0\u9679  
+\f1 Trace diagram for tracking bidding/limited offers for an item (if implemented) 
+\f0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Sample Host (Provider) Analysis Report 
+\f1\b0 \cf2 (From logs and database as applicable) 
+\f0 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 You may add any extra functionality you want (optional, not required), but if you do so, you must document and explain the additional features. You still must implement all the required features, however. The client should have a pleasing look and be simple to understand. Error conditions and feedback to the user should be displayed in a status area on the user interface. Ideally, you will use an IDE tool to create your GUI. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Tier 2 - Middleware 
+\f1\b0 \
+You will need to provide/design/enhance middleware using Kafka that can accomplish the above requirements. Implement it using REST-based Web Services as middleware technology. Next, decide on the interface your service will expose. Ensure you appropriately handle error conditions/exceptions/failure states and return meaningful information to your caller. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  
+\f1 Use 
+\f2\b MySQL and MongoDB 
+\f1\b0 appropriately (e.g., bookings/billing in MySQL; reviews, images, logs in MongoDB). Justify your choices when you are using which one 
+\f0 \
+\uc0\u9679  
+\f1 Provide schema diagrams/samples and indexing where relevant. 
+\f0 \
+\
+
+\f1 Handle the specific failure cases described below. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 ON OR BEFORE the listed date
+\f1\b0 , you must turn in a document describing the 
+\f2\b API interface 
+\f1\b0 your server will use (request\'96response descriptions). 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 Your project should also include a 
+\f2\b model/data access layer 
+\f1\b0 that uses standard modules to access your databases. Entity objects will use the data object to select/insert/update state. 
+\f0 \
+
+\f1 Use 
+\f2\b Kafka 
+\f1\b0 as a messaging platform for communication between front-end channels and backend systems. Separate Node into two parts connected via message queues. Design \'93backend services\'94 as consumer and \'93frontend services\'94 as producer as shown below diagram. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Tier 3 - Database Schema and Database Creation 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 Design and create your databases. Choose column names and types that are appropriate for your data. Provide a simple program or script that creates your databases and tables/collections. 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Agentic AI Recommendation Service in FastAPI 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 This service is a multi-agent travel concierge that 
+\f2\b periodically 
+\f1\b0 discovers great deals (scheduled scans), reasons about user needs in conversation, and turns those insights into actionable trip recommendations. It behaves less like a search box and more like a proactive teammate that plans, explains, and adapts. Use FastAPI for HTTP + 
+\f2\b WebSockets 
+\f1\b0 to push updates to the UI. (\cf3 FastAPI\cf0 ) \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs23 \cf0 \uc0\u9679  
+\f1 Understands intent & constraints in natural language (e.g., \'93weekend in Tokyo under $900, pet-friendly, near public transit\'94). 
+\f0 \
+\
+\pard\pardeftab720\sa8588\partightenfactor0
+\cf0 \uc0\u9679  
+\f1 Explains recommendations (tradeoffs, why this hotel over that one, key fees, cancellation rules) with short, template-based snippets. Watches for changes (price drops, sold-out risk) on a schedule and notifies the UI asynchronously over WebSockets. (\cf3 FastAPI\cf0 ) \
+
+\f0 \uc0\u9679  
+\f1 Finds and tags 
+\f2\b flight + hotel 
+\f1\b0 deals only (cars out-of-scope for MVP) using simple rules (e.g., price drop >15%, scarce inventory, limited-time promo). Builds coherent itineraries (bundles) that optimize for cost, convenience, and essential preferences. 
+\f0 \
+\uc0\u9679  
+\f1 Answers questions about policies, logistics, and alternatives using fields present in the datasets (refundability, pets, breakfast, neighborhood). 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Deals Agent (backend worker)
+\f1\b0 : ingests small CSV/mock feeds on a schedule, detects & tags deals, and emits updates via websocket connection(feel free to use Kafka as well) 
+\f0 \
+
+\f2\b Concierge Agent (chat-facing)
+\f1\b0 : understands user goals, composes simple flight+hotel bundles from cached deals, explains tradeoffs, and sets price/stock watches. Model requests/responses with Pydantic v2 and persist normalized entities with SQLModel (SQLite locally). (\cf3 Pydantic\cf0 ) \
+
+\f2\b What the service does (at a glance) 
+\f0\b0 \
+
+\f2\b Primary user journeys Tell me what I should book 
+\f1\b0 - User: \'93I\'92ve got Oct 25\'9627, SFO to anywhere warm, total budget $1,000 for two.\'94 - Outcome: The service proposes 2\'963 complete bundles with clear, comparable summaries (price, travel time, hotel neighborhood, cancellation terms), and a short \'93why this pick works for you.\'94 
+\f0 \
+
+\f2\b Refine without starting over 
+\f1\b0 - User: \'93Make it pet-friendly and avoid red-eye flights.\'94 - Outcome: The service preserves earlier context, regenerates options that respect new constraints, and highlights what changed (e.g., \'93+ $38, earlier departure, 20-minute longer connection\'94). 
+\f0 \
+
+\f2\b Keep an eye on it 
+\f1\b0 - User: \'93Track this Miami package; alert me if it dips below $850 or inventory drops under 5 rooms.\'94 - Outcome: 
+\f0 \
+
+\f2\b Decide with confidence - 
+\f1\b0 User: \'93Is the Marriott rate actually good?\'94 
+\f0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs23 \cf0 Use these Kaggle datasets: 
+\f0\b0 \
+
+\f2\b Hotels / nightly prices 
+\f1\b0 Inside Airbnb (pick a city): NYC: \cf3 https://www.kaggle.com/datasets/dominoweir/inside-airbnb-nyc \cf0 (Alt, general mirror): \cf3 https://www.kaggle.com/datasets/ahmedmagdee/inside-airbnb 
+\f0 \cf0 (
+\f1 \cf3 Kaggle\cf0 ) \
+
+\f2\b Hotel behavior 
+\f0\b0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf0 Hotel Booking Demand (City + Resort hotels): \cf3 https://www.kaggle.com/datasets/mojtaba142/hotel-booking \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 Flight prices (structure + base fares) (Use any from below) 
+\f1\b0 Flight Price Prediction (EaseMyTrip\'97India): \cf3 https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction \
+\pard\pardeftab720\partightenfactor0
+\cf0 Flight Prices (Expedia, 2022 US routes): \cf3 https://www.kaggle.com/datasets/dilwong/flightprices \
+\cf0 Schedules / ops (optional) US Flight Delays & Cancellations (2015): \cf3 https://www.kaggle.com/datasets/usdot/flight-delays \
+\cf0 Airports / routes reference Global Airports (IATA/ICAO/coords/timezone): \cf3 https://www.kaggle.com/datasets/samvelkoch/global-airports-iata-icao-timezone-geo \
+\cf0 OpenFlights (airlines, airports, routes): \cf3 https://www.kaggle.com/datasets/elmoallistair/airlines-airport-and-routes/ \
+\cf0 Behavioral (stretch only) Expedia Hotel Recommendations (competition data): \cf3 https://www.kaggle.com/competitions/expedia-hotel-recommendations \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b \cf0 How to use the datasets Deals Agent (backend worker) 
+\f1\b0 From Inside Airbnb pull: listing_id, date, price, availability, amenities, neighbourhood. Compute avg_30d_price, then flag deals: price \uc0\u8804  0.85 \'d7 avg_30d; mark Limited availability (<5); add simple tags (e.g., Pet-friendly, Near transit, Breakfast). From Flight Price Prediction / Expedia keep: origin, dest, airline, stops, duration, price. Use these as baselines and simulate a 
+\f2\b time series 
+\f1\b0 (mean-reverting price + random promo dips \uc0\u8722 10% to \u8722 25% + seats_left scarcity). }

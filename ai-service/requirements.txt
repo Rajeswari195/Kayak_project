@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+pandas
+kafka-python
+websockets
+google-generativeai
+python-dotenv
